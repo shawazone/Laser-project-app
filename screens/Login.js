@@ -26,7 +26,6 @@ const LogInScreen = props => {
         .signInWithEmailAndPassword(email, passWord)
         .then(() => {
           console.log('User account created & signed in!');
-          // props.navigation.navigate('Menu');
         })
         .catch(error => {
           if (error.code === 'auth/email-already-in-use') {
@@ -40,15 +39,15 @@ const LogInScreen = props => {
           console.error(error);
         });
     };
-    // return (
+
     return (
-      // section 1
+    
   
       <View style={styles.container}>
-        {/* section 2 */}
-        <Text style={styles.title}> Login Screen</Text>
+   
+        <Text style={styles.title}> Login </Text>
   
-        {/* section 3 */}
+     
         <View style={styles.inputView}>
           <TextInput
             style={styles.inputText}
@@ -70,20 +69,13 @@ const LogInScreen = props => {
           />
         </View>
   
-        {/* <TouchableOpacity
-  
-  onPress = {onPressForgotPassword}>
-  <Text style={styles.forgotAndSignUpText}>Forgot Password?</Text>
-  </TouchableOpacity> */}
+   
   
         <TouchableOpacity onPress={signIn} style={styles.loginBtn}>
           <Text style={styles.loginText}>LOGIN </Text>
         </TouchableOpacity>
   
-        {/* <TouchableOpacity
-  onPress = {onPressSignUp}>
-  <Text style={styles.forgotAndSignUpText}>Signup</Text>
-  </TouchableOpacity> */}
+  
       </View>
     );
   };
@@ -91,23 +83,23 @@ const LogInScreen = props => {
 
 
   const styles = StyleSheet.create({
-    // section 1
+ 
     container: {
       flex: 1,
-      // backgroundColor: "rgb(255, 255, 255)",
+      backgroundColor: "#c7b5df",
       alignItems: 'center',
       justifyContent: 'center',
     },
   
-    //   section 2
+   
     title: {
       fontWeight: 'bold',
       fontSize: 40,
-      color: "rgb(14, 27, 55)",
+      color: "black",
       marginBottom: 40,
     },
   
-    // section 3
+    
   
     inputView: {
       color: "rgb(14, 27, 55)",
@@ -124,7 +116,7 @@ const LogInScreen = props => {
       padding: 20,
     },
   
-    //section 4
+
     inputText: {
       height: 50,
       color: "rgb(14, 27, 55)",
@@ -141,11 +133,14 @@ const LogInScreen = props => {
       width: '80%',
       backgroundColor: 'white',
   
-      //borderRadius:25,
+     
       height: 50,
       alignItems: 'center',
       justifyContent: 'center',
       marginTop: 40,
       marginBottom: 10,
     },
+    loginText: {
+   color: "black",
+    }
   });

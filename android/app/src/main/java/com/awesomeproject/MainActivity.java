@@ -7,33 +7,35 @@ import com.facebook.react.defaults.DefaultReactActivityDelegate;
 import android.os.Bundle;
 
 
-import com.imagepicker.permissions.OnImagePickerPermissionsCallback;
+// import com.imagepicker.permissions.OnImagePickerPermissionsCallback;
 import com.facebook.react.modules.core.PermissionListener;
 
 
-public class MainActivity extends ReactActivity implements OnImagePickerPermissionsCallback{
+public class MainActivity extends ReactActivity {   
 
-  private PermissionListener listener;
+  // implements OnImagePickerPermissionsCallback
 
-@Override
-public void setPermissionListener(PermissionListener listener) {
-    this.listener = listener;
-}
+//   private PermissionListener listener;
 
-@Override
-public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-    if (listener != null) {
-        listener.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
-    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-}
+// @Override
+// public void setPermissionListener(PermissionListener listener) {
+//     this.listener = listener;
+// }
 
-@Override
-public void onImagePickerPermissionsCallback(boolean granted) {
-    if (listener != null) {
-        listener.onPermissionResult(granted);
-    }
-}
+// @Override
+// public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+//     if (listener != null) {
+//         listener.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//     }
+//     super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+// }
+
+// @Override
+// public void onImagePickerPermissionsCallback(boolean granted) {
+//     if (listener != null) {
+//         listener.onPermissionResult(granted);
+//     }
+// }
   
   
   

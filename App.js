@@ -6,9 +6,9 @@ import auth from '@react-native-firebase/auth';
 
 
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import LogInScreen from './Login';
-import Menu from './Menu';
-import AddItem from './Add';
+import LogInScreen from './screens/Login';
+import Menu from './screens/Menu';
+import AddItem from './screens/Add';
 
 
 
@@ -40,7 +40,7 @@ const App = () => {
         <Stack.Navigator>
           {!user?<Stack.Screen name="Login" component={LogInScreen} />:
           <><Stack.Screen name="Products" component={Menu} />
-          <Stack.Screen name="AddItem" component={AddItem} />
+          <Stack.Screen name="Add Item" component={AddItem} />
           {/* <Stack.Screen name="EditItem" component={EditItem} /> */}
           </>}
         </Stack.Navigator>

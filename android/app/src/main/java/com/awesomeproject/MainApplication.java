@@ -13,7 +13,7 @@ import com.facebook.soloader.SoLoader;
 import java.util.List;
 
 //image crop picker
-import com.reactnativeimagecropper.RNImageCropperPackage;
+// import com.reactnativeimagecropper.RNImageCropperPackage;
 
 
 public class MainApplication extends Application implements ReactApplication {

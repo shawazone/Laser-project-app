@@ -1,5 +1,5 @@
 import database from '@react-native-firebase/database';
-
+import storage from '@react-native-firebase/storage';
 import React, {useState, useEffect} from 'react';
 
 import RadioButtonRN from 'radio-buttons-react-native';
@@ -21,6 +21,9 @@ const AddItem = props => {
   const route = useRoute(); // sessin with coach omar
   const id = route?.params?.id;
 
+
+
+ 
   const data = [
     {
       label: "women's clothing.",
@@ -56,13 +59,11 @@ const AddItem = props => {
 
   if (id == 0 || id) {
     useEffect(() =>
-      // session with omar
       {
         database()
           .ref('/products/' + id)
           .once('value')
           .then(snapshot => {
-            // console.log('User data: ', snapshot.val());
             let data = snapshot.val();
             setTitle(data.title);
             setPrice(data.price+'');
@@ -97,10 +98,19 @@ const AddItem = props => {
 
 
 
-  const addPost = () => {
+  const addPost = async() => {
+    let fileName = selectedImage.split('/');
+    fileName =fileName[fileName.length-1];
+    const refrensee = storage().ref(fileName);
+    const storageResponce = await refrensee.putFile(selectedImage);
+    const uri = await storage().ref(fileName).getDownloadURL();
+
     const newReference = database().ref('/products').push();
 
     console.log('Auto generated key: ', newReference.key);
+   
+  
+
 
     newReference
       .set({
@@ -109,7 +119,7 @@ const AddItem = props => {
         title: title,
         price: price,
         description: description,
-        image: selectedImage,
+        image: uri,
       })
       .then(() => console.log('Data updated.'))
       .catch(e => console.log(e));
@@ -138,7 +148,7 @@ const AddItem = props => {
         console.log('ImagePicker Error: ', response.error);
       } else if (response){
         setSelectedImage(response.assets[0].uri);
-        console.log(response.assets[0].uri);
+
       }
     });
   };
@@ -153,17 +163,10 @@ const AddItem = props => {
 
      <TouchableOpacity
           onPress={pickImage}
-          style={{ borderWidth: 1,
-            padding:3,
-            margin: 10,
-            backgroundColor: "rgb(205, 231, 236)",
-            borderColor:"rgb(205, 231, 236)",
-            marginRight :150,
-            borderRadius: 10,}}>
-          <Text style={styles.Text}>selsect an image</Text>
+          style={styles.imgBtn}>
+          <Text style={styles.TextImg}>select an image</Text>
         </TouchableOpacity>
 
-      {/* <Button title="Pick an image from gallery" onPress={pickImage} /> */}
       {selectedImage && <Image source={{ uri: selectedImage }} style={styles.image} />}
     </View>
 
@@ -172,15 +175,12 @@ const AddItem = props => {
         <Text  style={styles.Text} >Enter Title</Text>
         <TextInput
           value={title}
-          // placeholder="Enter Title"
           onChangeText={setTitle}
           style={styles.inputView}
         />
         <Text  style={styles.Text} >Enter Price</Text>
         <TextInput
           value={price}
-          // placeholder="Enter Price"
-          // keyboardType="numeric"
           onChangeText={setPrice}
           style={styles.inputView}
         />
@@ -188,11 +188,10 @@ const AddItem = props => {
         <TextInput
           value={description}
           style={styles.inputView}
-          // placeholder="Enter Description"
           onChangeText={setDescription}
         />
 
-<View style={{flex: 1, alignItem: 'center', justifyContent: 'center'}}>
+<View style={{flex: 1, alignItem: 'center', justifyContent: 'center' , paddingLeft:4, paddingRight:4}}>
         <View style={styles.RadioButtonsStyle}>
           <Text  style={styles.Text} >choose category</Text>
           <RadioButtonRN
@@ -204,13 +203,7 @@ const AddItem = props => {
         <TouchableOpacity
           onPress={id == 0 || id?updatePost:addPost}
           title={id == 0 || id?"edit item":"add item"}
-          style={{ borderWidth: 1,
-            padding:3,
-            margin: 10,
-            backgroundColor: "rgb(205, 231, 236)",
-            borderColor:"rgb(205, 231, 236)",
-            marginRight :220,
-            borderRadius: 10,}}>
+          style={styles.addBtn}>
           <Text style={styles.Text}>{id == 0 || id?"edit item":"add item"}</Text>
         </TouchableOpacity>
       </View>
@@ -236,15 +229,17 @@ const styles = StyleSheet.create({
   },
 
   btn:{
-    fontSize: 20,
-    color: "rgb(14, 27, 55)",
+    fontSize: 220,
+    color: "#cdbbe5",
+    borderRadius:100,
   },
  Text: {
   fontSize: 20,
   color: "rgb(14, 27, 55)",
+  paddingLeft: 11,
  },
   inputView: {
-    // width: '80%',
+    
     margin: 5,
     padding: 5,
     paddingLeft: 20,
@@ -252,43 +247,42 @@ const styles = StyleSheet.create({
     color: "rgb(14, 27, 55)",
     borderRadius: 20,
     borderWidth:2,
-    borderColor:"rgb(205, 231, 236)",
-    // height: 30,
-    // marginBottom: 10,
+    borderColor:"#8748df",
 
-    // justifyContent: 'center',
-    // padding: 15,
   },
   RadioButtonsStyle: {
     margin: 0,
     padding: 0,
+    borderRadius:100,
   },
-  //   mood : {
-  //     marginHorizontal: 15,
-  //     alignItems: 'center',
-  //     },
 
-  //     wrapper: {
-  //     flexDirection: 'row',
-  //     justifyContent: 'space-evenly',
-  //     marginTop: 10,
-  //     },
-  //     inner: {
-  //     width: 15,
-  //     height: 15,
-  //     backgroundColor: 'gray',
-  //     borderRadius: 10,
-  //     },
-  //     outter: {
-  //     width: 20,
-  //     height: 20,
-  //     borderwidth: 1,
-  //     borderRadius: 15,
-  //     justifyContent: 'center',
-  //     alignItems: 'center',
-  //     },
-  //     text: {
-  //     fontSize: 28,
-  //     fontweight: '700'
-  //     },
+  imgBtn:{
+    borderWidth: 1,
+    padding:4,
+    margin: 10,
+    backgroundColor: "#cdbbe5",
+    borderColor:"gray",
+    marginRight :20,
+    borderRadius: 10,},
+
+
+    TextImg:{
+      fontSize: 20,
+      color: "rgb(14, 27, 55)",
+      paddingLeft:3,
+      paddingRight:3,
+    },
+
+
+  addBtn:{ borderWidth: 1,
+    padding:3,
+    margin: 10,
+    backgroundColor: "#cdbbe5",
+    borderColor:"gray",
+    borderWidth:1,
+    marginRight :10,
+    borderRadius: 10,
+    alignItems:"center",
+}  
+
 });
